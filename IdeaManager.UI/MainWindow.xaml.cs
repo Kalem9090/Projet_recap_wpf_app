@@ -1,23 +1,29 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using IdeaManager.UI.ViewModels;
+using IdeaManager.UI.Views;
 
-namespace IdeaManager.UI;
-
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace IdeaManager.UI
 {
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
+        private readonly IdeaFormViewModel _formVM;
+        private readonly IdeaListViewModel _listVM;
+
+        public MainWindow(IdeaFormViewModel formVM, IdeaListViewModel listVM)
+        {
+            InitializeComponent();
+
+            _formVM = formVM;
+            _listVM = listVM;
+
+            // Affiche la vue formulaire par défaut au lancement
+            AfficherVue(new IdeaFormView { DataContext = _formVM });
+        }
+
+        public void AfficherVue(UserControl vue)
+        {
+            ZonePrincipale.Content = vue;
+        }
     }
 }
